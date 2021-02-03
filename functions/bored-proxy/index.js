@@ -11,7 +11,7 @@ exports.boredProxy = (req, res) => {
   // Allows GETs from any origin with the Content-Type header
   // and caches preflight response for 3600s
 
-  res.set("Access-Control-Allow-Origin", "https://mtjody.github.io/");
+  res.set("Access-Control-Allow-Origin", "https://mtjody.github.io");
   switch (req.method) {
     case "OPTIONS": {
       // Send response to OPTIONS requests
