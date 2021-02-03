@@ -1,8 +1,16 @@
 <script lang="ts">
   async function getActivity() {
     const prom = new Promise(async (resolve, reject) => {
-      let res = await fetch("http://www.boredapi.com/api/activity/");
-      const json = await res.json();
+      let json;
+
+      try {
+        const res = await fetch(
+          "https://europe-west1-bored-dev.cloudfunctions.net/bored-api-proxy"
+        );
+        json = await res.json();
+      } catch (error) {
+        reject(error);
+      }
 
       setTimeout(() => {
         resolve(json);
@@ -23,9 +31,9 @@
 
   let promise = getActivity();
 
-  function handleClick() {
-    promise = getActivity();
-  }
+  // function handleClick() {
+  //   promise = getActivity();
+  // }
 </script>
 
 <main>
