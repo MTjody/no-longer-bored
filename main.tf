@@ -35,13 +35,23 @@ variable "bored_service_account" {
   default = "bored-app@bored-dev.iam.gserviceaccount.com"
 }
 
+variable "bucket_name" {
+  type    = string
+  default = "bored-dev-bucket"
+}
+
+variable "bucket_archive_filepath" {
+  type    = string
+  default = "bored.zip"
+}
+
 resource "google_storage_bucket" "bucket" {
-  name = "bored-dev-bucket"
+  name = var.bucket_name
 }
 
 data "archive_file" "http_trigger" {
   type        = "zip"
-  output_path = "./functions/bored-proxy/bored.zip"
+  output_path = format("%s/%s", path.root, var.bucket_archive_filepath)
   source {
     content  = file("./functions/bored-proxy/index.js")
     filename = "index.js"
@@ -49,9 +59,12 @@ data "archive_file" "http_trigger" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = "bored.zip"
-  bucket = google_storage_bucket.bucket.name
-  source = data.archive_file.http_trigger.output_path
+  name                = format("%s#%s", var.bucket_archive_filepath, data.archive_file.http_trigger.output_md5)
+  bucket              = google_storage_bucket.bucket.name
+  source              = data.archive_file.http_trigger.output_path
+  content_disposition = "attachment"
+  content_encoding    = "gzip"
+  content_type        = "application/zip"
 }
 
 resource "google_cloudfunctions_function" "function" {
