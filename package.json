@@ -4,6 +4,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "deploy": "push-dir --dir=public --branch=gh-pages",
     "start": "sirv public",
     "validate": "svelte-check"
   },
@@ -24,6 +25,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "push-dir": "^0.4.1",
     "sirv-cli": "^1.0.0"
   }
 }
