@@ -5,7 +5,7 @@
 
       try {
         const res = await fetch(
-          "https://www.boredapi.com/api/activity/"
+          "http://www.boredapi.com/api/activity/"
         );
         json = await res.json();
       } catch (error) {
