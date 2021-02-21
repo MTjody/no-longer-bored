@@ -5,7 +5,7 @@
 
       try {
         const res = await fetch(
-          "https://europe-west1-bored-dev.cloudfunctions.net/bored-api-proxy"
+          "http://www.boredapi.com/api/activity/"
         );
         json = await res.json();
       } catch (error) {
@@ -30,10 +30,6 @@
   }
 
   let promise = getActivity();
-
-  // function handleClick() {
-  //   promise = getActivity();
-  // }
 </script>
 
 <main>
